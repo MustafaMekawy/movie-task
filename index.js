@@ -1,4 +1,6 @@
-const moves = [
+
+// i do this with arrays not database tables i think that is a task requirements
+const movies = [
   {
     title: "The Shawshank Redemption",
     duration: "PT142M",
@@ -55,32 +57,33 @@ const users = [
   },
 ];
 
+
 function topFavouriteMoviesAmongFriends(userID) {
   const friendIDs = users.find((user) => user.userId === userID)?.friends || [];
-  const movesRank = {};
+  const moviesRank = {};
 
-  if (!moves.length) return [];
-  for (let i = 0; i < moves.length; i++) {
-    const movie = moves[i];
-    if (!movesRank[movie.title]) {
-      movesRank[movie.title] = 0;
+  if (!movies.length) return [];
+  for (let i = 0; i < movies.length; i++) {
+    const movie = movies[i];
+    if (!moviesRank[movie.title]) {
+      moviesRank[movie.title] = 0;
     }
 
     for (let j = 0; j < movie.favorites.length; j++) {
       const favoriteUserID = movie.favorites[j];
       if (friendIDs.includes(favoriteUserID)) {
-        movesRank[movie.title]++;
+        moviesRank[movie.title]++;
       }
     }
   }
 
-  const sortedMovies = Object.keys(movesRank).sort((a, b) => {
-    if (movesRank[a] === movesRank[b]) {
+  const sortedMovies = Object.keys(moviesRank).sort((a, b) => {
+    if (moviesRank[a] === moviesRank[b]) {
       return a.localeCompare(b); // Sort alphabetically if favorites count is equal
     }
-    return movesRank[b] - movesRank[a]; // Sort by favorites count
+    return moviesRank[b] - moviesRank[a]; // Sort by favorites count
   });
-
+ //select to 3 movies
   return sortedMovies.slice(0, 3);
 }
 
